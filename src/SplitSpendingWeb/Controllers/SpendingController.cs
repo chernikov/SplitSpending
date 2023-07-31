@@ -11,11 +11,13 @@ namespace SplitSpendingWeb.Controllers;
 public class SpendController : Controller {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ILogger<SpendController> _logger;
 
-    public SpendController(IMediator mediator, IMapper mapper)
+    public SpendController(IMediator mediator, IMapper mapper, ILogger<SpendController> logger)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -37,7 +39,7 @@ public class SpendController : Controller {
             return Created("", result);
 
         } catch (Exception ex) {
-            Console.WriteLine($"--> Can't add spending. {command.Name} {command.Amount}\r\n Exception: {ex.Message}");
+            _logger.LogError($"--> Can't add spending. {command.Name} {command.Amount}\r\n Exception: {ex.Message}");
             return BadRequest();
         }
     }

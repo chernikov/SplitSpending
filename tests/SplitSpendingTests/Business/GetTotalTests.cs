@@ -6,23 +6,25 @@ using SplitSpendingWeb.Model;
 
 namespace SplitSpendingTests.Business;
 
-public class GetTotalTests {
+public class GetTotalTests
+{
 
     private Mock<DbSet<Spending>> mockSpendings = null!;
 
     private Mock<IAppDbContext> mockAppDbContext = null!;
 
-    private List<Spending> emptyList  = new List<Spending>();
+    private List<Spending> emptyList = new List<Spending>();
 
-    private List<Spending> regularList  = new List<Spending>() {
+    private List<Spending> regularList = new List<Spending>() {
         new Spending() {Name = "Alex", Amount = 300},
         new Spending() {Name = "Becca", Amount = 0},
         new Spending() {Name = "Ryan", Amount = 0},
         new Spending() {Name = "Alex", Amount = 200}
     };
-    
+
     [Fact]
-    public async void EmptyList_ShouldReturnEmpty() {
+    public async void EmptyList_ShouldReturnEmpty()
+    {
 
         MockSpendingDbSet(emptyList);
         MockAppDbContext();
@@ -35,8 +37,9 @@ public class GetTotalTests {
         Assert.Empty(result);
     }
 
-[Fact]
-    public async void RegularList_ShouldReturnThreeString() {
+    [Fact]
+    public async void RegularList_ShouldReturnThreeString()
+    {
 
         MockSpendingDbSet(regularList);
         MockAppDbContext();
@@ -53,15 +56,17 @@ public class GetTotalTests {
     }
 
 
-    private void MockSpendingDbSet(List<Spending> list) {
+    private void MockSpendingDbSet(List<Spending> list)
+    {
 
         mockSpendings = new Mock<DbSet<Spending>>();
-         mockSpendings.As<IAsyncEnumerable<Spending>>()
-                .Setup(m => m.GetAsyncEnumerator(CancellationToken.None))
-                .Returns(new AsyncEnumerator<Spending>(list.GetEnumerator()));
+        mockSpendings.As<IAsyncEnumerable<Spending>>()
+               .Setup(m => m.GetAsyncEnumerator(CancellationToken.None))
+               .Returns(new AsyncEnumerator<Spending>(list.GetEnumerator()));
     }
 
-    private void MockAppDbContext() {
+    private void MockAppDbContext()
+    {
         mockAppDbContext = new Mock<IAppDbContext>();
         mockAppDbContext.Setup(p => p.Spendings)
             .Returns(mockSpendings.Object);

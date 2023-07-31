@@ -9,21 +9,23 @@ namespace SplitSpendingWeb.Controllers;
 public class InitController : Controller
 {
     private readonly IMediator _mediator;
+    private readonly ILogger<InitController> _logger;
 
-    public InitController(IMediator mediator)
+    public InitController(IMediator mediator, ILogger<InitController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [HttpPost]
 
     public async Task<IActionResult> Post([FromBody] InitCommand command) 
     {
-        Console.WriteLine($"--> Init {command.Name}");
+        _logger.LogTrace($"--> Init {command.Name}");
         var result = await _mediator.Send(command);
 
         if (result > 0) {
-            Console.WriteLine($"{command.Name} Inited");
+            _logger.LogTrace($"{command.Name} Inited");
             return Created("", result);
         }
         return NoContent();
