@@ -2,9 +2,9 @@ namespace SplitSpendingWeb.Business.Commands;
 
 public class CreateSpendingCommandHandler : IRequestHandler<CreateSpendingCommand, int>
 {
-    private readonly AppDbContext _context;
+    private readonly IAppDbContext _context;
 
-    public CreateSpendingCommandHandler(AppDbContext context)
+    public CreateSpendingCommandHandler(IAppDbContext context)
     {
         _context = context;
     }
@@ -19,7 +19,7 @@ public class CreateSpendingCommandHandler : IRequestHandler<CreateSpendingComman
             Amount = request.Amount,
             Name = request.Name
         };
-        await _context.AddAsync(spending);
+        await _context.Spendings.AddAsync(spending);
         await _context.SaveChangesAsync();
 
         return spending.Id;

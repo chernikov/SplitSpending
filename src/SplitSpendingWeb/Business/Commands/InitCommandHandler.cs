@@ -1,9 +1,9 @@
 namespace SplitSpendingWeb.Business.Commands;
 
 public class InitCommandHandler : IRequestHandler<InitCommand, int> {
-    private readonly AppDbContext _context;
+    private readonly IAppDbContext _context;
 
-    public InitCommandHandler(AppDbContext context)
+    public InitCommandHandler(IAppDbContext context)
     {
         _context = context;
     }

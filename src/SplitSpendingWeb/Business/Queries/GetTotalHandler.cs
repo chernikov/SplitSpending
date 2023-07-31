@@ -5,9 +5,9 @@ namespace SplitSpendingWeb.Business.Queries;
 
 public class GetTotalHandler : IRequestHandler<GetTotal, IEnumerable<TotalItemDto>>
 {
-    private readonly AppDbContext _context;
+    private readonly IAppDbContext _context;
 
-    public GetTotalHandler(AppDbContext context)
+    public GetTotalHandler(IAppDbContext context)
     {
         _context = context;
     }

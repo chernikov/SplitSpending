@@ -7,9 +7,9 @@ namespace SplitSpendingWeb.Business.Queries;
 
 public class GetSpendingDetailsQueryHandler : IRequestHandler<GetSpendingDetailsQuery, IEnumerable<Spending>>
 {
-    private AppDbContext _context;
+    private IAppDbContext _context;
 
-    public GetSpendingDetailsQueryHandler(AppDbContext context)
+    public GetSpendingDetailsQueryHandler(IAppDbContext context)
     {
         _context = context;
     }
